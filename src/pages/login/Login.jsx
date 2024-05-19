@@ -1,33 +1,42 @@
-import { useEffect, useRef, useState } from 'react';
-import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import { useContext, useEffect, useRef, useState } from "react";
+import {
+  loadCaptchaEnginge,
+  LoadCanvasTemplate,
+  validateCaptcha,
+} from "react-simple-captcha";
+import { AuthContext } from "../../provider/AuthProvider";
 
 
 const Login = () => {
-    const [disabled, setDisabled] = useState(true)
+    const captchaRef = useRef(null);
+    const [disabled, setDisabled] = useState(true);
+    
+    const {signIn} = useContext(AuthContext)            
 
-    const captchaRef = useRef(null)
+  useEffect(() => {
+    loadCaptchaEnginge(6);
+  }, []);
 
-useEffect(()=>{
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    signIn(email, password)
+    .then(result => {
+        const user = result.user;
+        console.log(user);
+    })
+    console.log(email, password);
+  };
 
-    loadCaptchaEnginge(6); 
-},[])
-
-    const handleSubmit = event =>{
-        event.preventDefault();
-        const form = event.target;
-        const email = form.email.value;
-        const password = form.password.value;
-        console.log(email, password);
+  const handleValidateCaptcha = () => {
+    const user_captcha_value = captchaRef.current.value;
+    if (validateCaptcha(user_captcha_value) == true) {
+      // alert('Captcha Matched');
+      setDisabled(false);
     }
-
-    const handleValidateCaptcha = () =>{
-        const user_captcha_value = captchaRef.current.value;
-        if (validateCaptcha(user_captcha_value)==true) {
-            // alert('Captcha Matched');
-            setDisabled(false)
-        }
-    }
-
+  };
 
   return (
     <div>
@@ -52,7 +61,7 @@ useEffect(()=>{
                   placeholder="email"
                   name="email"
                   className="input input-bordered"
-                //   required
+                  //   required
                 />
               </div>
               <div className="form-control">
@@ -64,16 +73,32 @@ useEffect(()=>{
                   name="password"
                   placeholder="password"
                   className="input input-bordered"
-                //   required
+                  //   required
                 />
                 <label className="label">
-                <LoadCanvasTemplate />
+                  <LoadCanvasTemplate />
                 </label>
-                <input type="text" ref={captchaRef} name='captcha' placeholder='type the captcha above' className='input input-bordered'/>
-                <button onClick={handleValidateCaptcha} className='btn btn-outline btn-xs mt-2'>Validate</button>
+                <input
+                  type="text"
+                  ref={captchaRef}
+                  name="captcha"
+                  placeholder="type the captcha above"
+                  className="input input-bordered"
+                />
+                <button
+                  onClick={handleValidateCaptcha}
+                  className="btn btn-outline btn-xs mt-2"
+                >
+                  Validate
+                </button>
               </div>
               <div className="form-control mt-6">
-                <input disabled={disabled} className="btn btn-primary" type="submit" value="Login"/>
+                <input
+                  disabled={disabled}
+                  className="btn btn-primary"
+                  type="submit"
+                  value="Login"
+                />
               </div>
             </form>
           </div>
