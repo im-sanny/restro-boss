@@ -29,7 +29,7 @@ const Navbar = () => {
         <NavLink to={"/signup"}>SignUp</NavLink>
       </li>
       <li>
-        <NavLink to={"/"}>
+        <NavLink to={"/dashboard/cart"}>
           <button className="flex items-center gap-1">
             <FaCartShopping className=""></FaCartShopping>
             <div className="badge badge-secondary">+{cart.length}</div>
