@@ -8,7 +8,7 @@ import "@smastrom/react-rating/style.css";
 import { Rating } from "@smastrom/react-rating";
 
 const Testimonials = () => {
-  const [rating, setRating] = useState(3);
+  // const [rating, setRating] = useState(3);
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
     fetch("http://localhost:9000/review")
@@ -28,7 +28,7 @@ const Testimonials = () => {
               <Rating
                 style={{ maxWidth: 180 }}
                 value={review.rating}
-                onChange={setRating}
+                // onChange={setRating}
               />
               <p className="py-8">{review.details}</p>
               <h3 className="text-2xl text-orange-400">{review.name}</h3>

@@ -5,6 +5,9 @@ import {
   validateCaptcha,
 } from "react-simple-captcha";
 import { AuthContext } from "../../provider/AuthProvider";
+import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import Swal from "sweetalert2";
 
 
 const Login = () => {
@@ -26,20 +29,41 @@ const Login = () => {
     .then(result => {
         const user = result.user;
         console.log(user);
+        Swal.fire({
+            title: "User login successful",
+            showClass: {
+              popup: `
+                animate__animated
+                animate__fadeInUp
+                animate__faster
+              `
+            },
+            hideClass: {
+              popup: `
+                animate__animated
+                animate__fadeOutDown
+                animate__faster
+              `
+            }
+          });
     })
     console.log(email, password);
   };
 
-  const handleValidateCaptcha = () => {
-    const user_captcha_value = captchaRef.current.value;
+  const handleValidateCaptcha = (e) => {
+    const user_captcha_value = e.target.value;
     if (validateCaptcha(user_captcha_value) == true) {
       // alert('Captcha Matched');
       setDisabled(false);
     }
+    
   };
 
   return (
     <div>
+        <Helmet>
+    <title>Restro Boss | Login</title>
+    </Helmet>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center md:w-1/2 lg:text-left">
@@ -79,18 +103,13 @@ const Login = () => {
                   <LoadCanvasTemplate />
                 </label>
                 <input
+                  onBlur={handleValidateCaptcha}
                   type="text"
                   ref={captchaRef}
                   name="captcha"
                   placeholder="type the captcha above"
                   className="input input-bordered"
                 />
-                <button
-                  onClick={handleValidateCaptcha}
-                  className="btn btn-outline btn-xs mt-2"
-                >
-                  Validate
-                </button>
               </div>
               <div className="form-control mt-6">
                 <input
@@ -101,6 +120,7 @@ const Login = () => {
                 />
               </div>
             </form>
+            <p className="text-center mb-5"><small>New here? <Link to={'/signup'}>Create an account</Link></small> </p>
           </div>
         </div>
       </div>
