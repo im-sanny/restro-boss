@@ -8,16 +8,16 @@ import { AuthContext } from "../../provider/AuthProvider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
-
+import SocialLogin from "../../components/socialLogin/SocialLogin";
 
 const Login = () => {
-    const captchaRef = useRef(null);
-    const [disabled, setDisabled] = useState(true);
-    const {signIn} = useContext(AuthContext)  
-    const navigate = useNavigate()          
-    const location = useLocation()
+  const captchaRef = useRef(null);
+  const [disabled, setDisabled] = useState(true);
+  const { signIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    const from = location.state?.from?.pathname || '/';
+  const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -28,29 +28,28 @@ const Login = () => {
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    signIn(email, password)
-    .then(result => {
-        const user = result.user;
-        console.log(user);
-        Swal.fire({
-            title: "User login successful",
-            showClass: {
-              popup: `
+    signIn(email, password).then((result) => {
+      const user = result.user;
+      console.log(user);
+      Swal.fire({
+        title: "User login successful",
+        showClass: {
+          popup: `
                 animate__animated
                 animate__fadeInUp
                 animate__faster
-              `
-            },
-            hideClass: {
-              popup: `
+              `,
+        },
+        hideClass: {
+          popup: `
                 animate__animated
                 animate__fadeOutDown
                 animate__faster
-              `
-            }
-          });
-          navigate(from,{ replace:true });
-    })
+              `,
+        },
+      });
+      navigate(from, { replace: true });
+    });
     console.log(email, password);
   };
 
@@ -60,14 +59,13 @@ const Login = () => {
       // alert('Captcha Matched');
       setDisabled(false);
     }
-    
   };
 
   return (
     <div>
-        <Helmet>
-    <title>Restro Boss | Login</title>
-    </Helmet>
+      <Helmet>
+        <title>Restro Boss | Login</title>
+      </Helmet>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center md:w-1/2 lg:text-left">
@@ -125,7 +123,12 @@ const Login = () => {
                 />
               </div>
             </form>
-            <p className="text-center mb-5"><small>New here? <Link to={'/signup'}>Create an account</Link></small> </p>
+            <SocialLogin></SocialLogin>
+            <p className="text-center mb-5">
+              <small>
+                New here? <Link to={"/signup"}>Create an account</Link>
+              </small>{" "}
+            </p>
           </div>
         </div>
       </div>
