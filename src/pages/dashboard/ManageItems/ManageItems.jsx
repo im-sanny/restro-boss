@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SectionTitle from "../../../components/sectionTitle/SectionTitle";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useMenu from "../../../hooks/useMenu";
@@ -75,16 +76,17 @@ const ManageItems = () => {
                   <td>{item.name}</td>
                   <td>$ {item.price}</td>
                   <th>
-                    <button
-                      // onClick={() => handleUpdate(item)}
-                      className="btn btn-ghost btn-lg hover:bg-orange-400 hover:text-white"
-                    >
-                      <FaEdit></FaEdit>
-                    </button>
+                    <Link to={`/dashboard/updateItem/${item._id}`}>
+                      <button
+                        className="btn btn-ghost btn-lg hover:bg-orange-400 hover:text-white"
+                      >
+                        <FaEdit></FaEdit>
+                      </button>
+                    </Link>
                   </th>
                   <th>
                     <button
-                      onClick={() => handleDeleteItem(item)}
+                      onClick={() => handleDeleteItem (item)}
                       className="btn btn-ghost btn-lg text-red-600"
                     >
                       <FaTrashAlt></FaTrashAlt>

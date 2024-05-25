@@ -1,18 +1,20 @@
-import { useForm } from "react-hook-form";
+import { useLoaderData } from "react-router-dom";
 import SectionTitle from "../../../components/sectionTitle/SectionTitle";
-import { FaUtensils } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 import useAxiosPublic from "../../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import Swal from "sweetalert2";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
-const AddItems = () => {
+
+const UpdateItem = () => {
   const { register, handleSubmit, reset } = useForm();
+  const {name, category, recipe, price, _id} = useLoaderData();
+
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
 
-  
   const onSubmit = async (data) => {
     console.log(data);
     //image upload to imgbb and the get an url
@@ -31,15 +33,15 @@ const AddItems = () => {
         recipe: data.recipe,
         image: res.data.data.display_url,
       };
-      const menuRes = await axiosSecure.post("/menu", menuItem);
+      const menuRes = await axiosSecure.patch(`/menu/${_id}`, menuItem);
       console.log(menuRes);
-      if (menuRes.data.insertedId) {
-        reset();
+      if (menuRes.data.modifiedCount > 0) {
+        // reset();
         //show success popup
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: `${data.name} is added to the menu.`,
+          title: `${data.name} is updated to the menu.`,
           showConfirmButton: false,
           timer: 1500,
         });
@@ -49,8 +51,8 @@ const AddItems = () => {
   return (
     <div>
       <SectionTitle
-        heading={"add an item"}
-        subHeading={"what's new?"}
+        heading={"Update Item"}
+        subHeading={"Update item details!"}
       ></SectionTitle>
       <div>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -59,6 +61,7 @@ const AddItems = () => {
               <span className="label-text">Recipe Name*</span>
             </div>
             <input
+            defaultValue={name}
               type="text"
               placeholder="Recipe Name"
               {...register("name", { required: true })}
@@ -69,8 +72,11 @@ const AddItems = () => {
           <div className="flex gap-5">
             {/* category */}
             <div className="form-control w-full my-6">
+              <div className="label">
+                <span className="label-text">Category*</span>
+              </div>
               <select
-                defaultValue={"default"}
+                defaultValue={category}
                 {...register("category", { required: true })}
                 required
                 className="select select-bordered w-full "
@@ -91,6 +97,7 @@ const AddItems = () => {
                 <span className="label-text">Price*</span>
               </div>
               <input
+              defaultValue={price}
                 type="number"
                 placeholder="Price"
                 {...register("price", { required: true })}
@@ -104,9 +111,10 @@ const AddItems = () => {
             <div className="label">
               <span className="label-text">Recipe Details</span>
             </div>
-            <textarea
+            <textarea            
               className="textarea textarea-bordered h-24"
               placeholder="Recipe Details"
+              defaultValue={recipe}
               {...register("recipe", { required: true })}
               required
             ></textarea>
@@ -121,13 +129,11 @@ const AddItems = () => {
             />
           </div>
 
-          <button className="btn">
-            Add Item <FaUtensils className="ml-5"></FaUtensils>
-          </button>
+          <button className="btn">Update Menu Item</button>
         </form>
       </div>
     </div>
   );
 };
 
-export default AddItems;
+export default UpdateItem;
