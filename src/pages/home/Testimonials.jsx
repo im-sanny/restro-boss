@@ -11,7 +11,7 @@ const Testimonials = () => {
   // const [rating, setRating] = useState(3);
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/review")
+    fetch("https://restro-boss-serverside.vercel.app/review")
       .then((res) => res.json())
       .then((data) => setReviews(data));
   }, []);
