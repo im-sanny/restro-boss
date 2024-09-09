@@ -5,7 +5,11 @@ const Footer = () => {
       <footer className="footer flex flex-col md:flex-row justify-between bg-slate-100 text-base-content py-10 px-5 md:px-20 space-y-6 md:space-y-0">
         {/* Logo & Company Info */}
         <aside className="">
-          <img src="/src/assets/logo.png" alt="Restro Boss Logo" className="w-16 h-16 mb-3" />
+          <img
+            src="/src/assets/logo.png"
+            alt="Restro Boss Logo"
+            className="w-16 h-16 mb-3"
+          />
           <p className="">
             <span className="text-2xl font-bold">Restro Boss</span>
             <br />
