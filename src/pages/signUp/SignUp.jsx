@@ -31,7 +31,7 @@ const SignUp = () => {
           };
           axiosPublic.post("/users", userInfo).then((res) => {
             if (res.data.insertedId) {
-              console.log('user added to the database');
+              console.log("user added to the database");
               reset();
               Swal.fire({
                 position: "center",
@@ -52,29 +52,30 @@ const SignUp = () => {
       <Helmet>
         <title>Restro Boss | Sign Up</title>
       </Helmet>
-      <div className="hero min-h-screen bg-base-200">
-        <div className="hero-content flex-col lg:flex-row-reverse">
-          <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Sign up now!</h1>
-            <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
-            </p>
-          </div>
-          <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+      <div
+        className="hero min-h-screen bg-base-200"
+        style={{
+          backgroundImage: "url('/path/to/your/image.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="container flex items-center justify-center min-h-screen px-6 mx-auto">
+          <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-white bg-opacity-90 rounded-lg">
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+              <h1 className="text-3xl font-bold drop-shadow-lg">
+                Sign up now!
+              </h1>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Name</span>
+                  <span className="label-text text-lg font-semibold">Name</span>
                 </label>
                 <input
                   type="text"
                   name="name"
-                  placeholder="name"
+                  placeholder="Enter your name"
                   {...register("name", { required: true })}
-                  className="input input-bordered"
-                  // required
+                  className="input input-bordered focus:outline-none focus:ring-2 focus:ring-primary"
                 />
                 {errors.name && (
                   <span className="text-red-600">Name is required</span>
@@ -82,14 +83,15 @@ const SignUp = () => {
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">PhotoURL</span>
+                  <span className="label-text text-lg font-semibold">
+                    PhotoURL
+                  </span>
                 </label>
                 <input
                   type="text"
-                  placeholder="photoURL"
+                  placeholder="Enter your photo URL"
                   {...register("photoURL", { required: true })}
-                  className="input input-bordered"
-                  // required
+                  className="input input-bordered focus:outline-none focus:ring-2 focus:ring-primary"
                 />
                 {errors.photURL && (
                   <span className="text-red-600">PhotoURL is required</span>
@@ -97,15 +99,16 @@ const SignUp = () => {
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Email</span>
+                  <span className="label-text text-lg font-semibold">
+                    Email
+                  </span>
                 </label>
                 <input
                   type="email"
                   name="email"
-                  placeholder="email"
+                  placeholder="Enter your email"
                   {...register("email", { required: true })}
-                  className="input input-bordered"
-                  // required
+                  className="input input-bordered focus:outline-none focus:ring-2 focus:ring-primary"
                 />
                 {errors.email && (
                   <span className="text-red-600">Email is required</span>
@@ -113,12 +116,14 @@ const SignUp = () => {
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Password</span>
+                  <span className="label-text text-lg font-semibold">
+                    Password
+                  </span>
                 </label>
                 <input
                   type="password"
                   name="password"
-                  placeholder="password"
+                  placeholder="Enter your password"
                   {...register("password", {
                     required: "Password is required",
                     minLength: {
@@ -136,24 +141,19 @@ const SignUp = () => {
                         "Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character",
                     },
                   })}
-                  className="input input-bordered"
+                  className="input input-bordered focus:outline-none focus:ring-2 focus:ring-primary"
                 />
                 {errors.password && (
                   <span className="text-red-600">
                     {errors.password.message}
                   </span>
                 )}
-                <label className="label">
-                  <a href="#" className="label-text-alt link link-hover">
-                    Forgot password?
-                  </a>
-                </label>
               </div>
-              <div className="form-control mt-6">
+              <div className="form-control mt-2">
                 <input
                   type="submit"
                   value={"Sign Up"}
-                  className="btn btn-primary"
+                  className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50"
                 />
               </div>
             </form>
